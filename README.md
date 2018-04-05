@@ -28,10 +28,10 @@ Please publish it as `minecord-plugin-[PLUGIN]`.
 
 ```js
 export default Plugin => new Plugin({
-  discord ({message, sendDiscord, sendMinecraft}) {
+  discord ({message, sendToDiscord, sendToMinecraft}) {
     // Processing when message is received from Discord.
   },
-  minecraft ({log, time, causedAt, level, message, sendDiscord, sendMinecraft}) {
+  minecraft ({log, time, causedAt, level, message, sendToDiscord, sendToMinecraft}) {
     // Processing when receiving a message from Minecraft.
   }
 })

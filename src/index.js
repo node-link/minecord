@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import 'babel-polyfill'
 import { config } from 'dotenv'
 import { Client } from 'discord.js'
@@ -34,8 +36,8 @@ const log = new Tail(MINECRAFT_SERVER_LOG_PATH)
 
 let channel
 
-const sendDiscord = async (...args) => await channel.send(...args)
-const sendMinecraft = async (...args) => await rcon.send(...args)
+const sendToDiscord = async (...args) => await channel.send(...args)
+const sendToMinecraft = async (...args) => await rcon.send(...args)
 
 discord.on('ready', () => {
   channel = discord.channels.get(DISCORD_CHANNEL_ID)
@@ -48,8 +50,8 @@ discord.on('message', async message => {
   await rcon.connect()
   await Promise.all(plugins.map(async plugin => plugin.discord({
     message,
-    sendDiscord,
-    sendMinecraft,
+    sendToDiscord,
+    sendToMinecraft,
   })))
   await rcon.disconnect()
 })
@@ -68,8 +70,8 @@ log.on('line', async line => {
     causedAt,
     level,
     message,
-    sendDiscord,
-    sendMinecraft,
+    sendToDiscord,
+    sendToMinecraft,
   })))
 })
 

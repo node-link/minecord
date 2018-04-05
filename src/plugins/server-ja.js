@@ -3,15 +3,15 @@ const RegExpStartingServer = /^Starting\sminecraft\sserver\sversion\s.*$/
 const RegExpStartingServerDone = /^Done\s\(.*s\)!\sFor\shelp,\stype\s"help"\sor\s"\?"$/
 
 export default Plugin => new Plugin({
-  async minecraft ({causedAt, level, message, sendDiscord}) {
+  async minecraft ({causedAt, level, message, sendToDiscord}) {
     if (causedAt !== 'Server thread' || level !== 'INFO') return
 
     if (RegExpStoppingServer.test(message)) {
-      await sendDiscord('サーバーが止まったみたい。')
+      await sendToDiscord('サーバーが止まったみたい。')
     } else if (RegExpStartingServer.test(message)) {
-      await sendDiscord('サーバーが動きだしたみたい。')
+      await sendToDiscord('サーバーが動きだしたみたい。')
     } else if (RegExpStartingServerDone.test(message)) {
-      await sendDiscord('サーバーの準備ができたみたい。')
+      await sendToDiscord('サーバーの準備ができたみたい。')
     }
   }
 })
