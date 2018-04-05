@@ -45,7 +45,7 @@ Set up the `config.json` file.
 
 In order to acquire the channel ID, enable developer mode in your Discord client, then right click channel and select "Copy ID".
 
-And run Minecord. (In the directory where `.env` resides)
+And run Minecord.
 
 ```
 minecord --config /path/to/config.json
