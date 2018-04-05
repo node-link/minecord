@@ -1,0 +1,45 @@
+{
+  "name": "minecord",
+  "version": "0.0.1",
+  "description": "Connects Discord and Minecraft Servers without any mods or plugins.",
+  "main": "./lib/index.js",
+  "module": "./src/index.js",
+  "files": [
+    "lib"
+  ],
+  "bin": {
+    "minecord": "./lib/index.js"
+  },
+  "scripts": {
+    "build": "babel src -d lib",
+    "watch": "babel src -d lib --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-link/minecord.git"
+  },
+  "keywords": [
+    "Discord",
+    "Minecraft"
+  ],
+  "author": "moriyama@node-link.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/node-link/minecord/issues"
+  },
+  "homepage": "https://github.com/node-link/minecord#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "discord.js": "^11.3.2",
+    "dotenv": "^5.0.1",
+    "modern-rcon": "^1.0.3",
+    "tail": "^1.2.3"
+  }
+}
