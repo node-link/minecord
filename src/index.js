@@ -45,7 +45,7 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
     if (message.author.id === discord.user.id) return
 
     await rcon.connect()
-    await Promise.all(plugins.map(async plugin => plugin.discord({
+    await Promise.all(plugins.map(async plugin => await plugin.discord({
       message,
       sendToDiscord,
       sendToMinecraft,
@@ -61,7 +61,7 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
     const [log, time, causedAt, level, message] = RegExpLog.exec(line)
     console.log(log)
 
-    await Promise.all(plugins.map(async plugin => plugin.minecraft({
+    await Promise.all(plugins.map(async plugin => await plugin.minecraft({
       log,
       time,
       causedAt,
