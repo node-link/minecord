@@ -1,0 +1,13 @@
+{
+  "pluginsDir": null,
+  "enable": [
+    "chat"
+  ],
+  "disable": [],
+  "minecraftLog": "/var/minecraft/logs/latest.log",
+  "minecraftRconHost": "localhost",
+  "minecraftRconPort": 25575,
+  "minecraftRconPassword": "",
+  "discordBotToken": "",
+  "discordChannel": ""
+}
