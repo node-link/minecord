@@ -4,7 +4,7 @@ import 'babel-polyfill'
 import config from './config'
 import { Client } from 'discord.js'
 import Rcon from 'modern-rcon'
-import Tail from 'always-tail'
+import { Tail } from 'tail'
 import Plugin from './Plugin'
 
 config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, minecraftRconPort, minecraftRconPassword, discordBotToken, discordChannel}) => {
@@ -80,5 +80,4 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
   })
 
   discord.login(discordBotToken)
-  tail.watch()
 })
