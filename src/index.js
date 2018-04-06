@@ -8,6 +8,8 @@ import Tail from 'always-tail'
 import Plugin from './Plugin'
 
 config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, minecraftRconPort, minecraftRconPassword, discordBotToken, discordChannel}) => {
+  process.stdout.write('Starting Minecord ... ')
+
   const discord = new Client()
   const rcon = new Rcon(minecraftRconHost, minecraftRconPort, minecraftRconPassword)
   const tail = new Tail(minecraftLog)
@@ -38,15 +40,18 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
 
   discord.on('ready', () => {
     channel = discord.channels.get(discordChannel)
+    console.log('Done!!')
   })
 
   discord.on('message', async message => {
     if (message.channel.id !== channel.id) return
-    if (message.author.id === discord.user.id) return
+    if (message.author.bot || message.author.id === discord.user.id) return
 
     await rcon.connect()
     await Promise.all(plugins.map(async plugin => await plugin.discord({
       message,
+      channel,
+      user: discord.user,
       sendToDiscord,
       sendToMinecraft,
     })))
@@ -67,6 +72,8 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
       causedAt,
       level,
       message,
+      channel,
+      user: discord.user,
       sendToDiscord,
       sendToMinecraft,
     })))

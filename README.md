@@ -98,10 +98,10 @@ When publishing the global plugin, please publish it as `minecord-plugin-[PLUGIN
 
 ```js
 export default Plugin => new Plugin({
-  discord ({message, sendToDiscord, sendToMinecraft}) {
+  discord ({message, channel, user, sendToDiscord, sendToMinecraft}) {
     // Processing when receiving a message from Discord.
   },
-  minecraft ({log, time, causedAt, level, message, sendToDiscord, sendToMinecraft}) {
+  minecraft ({log, time, causedAt, level, message, channel, user, sendToDiscord, sendToMinecraft}) {
     // Processing when receiving a message from Minecraft.
   }
 })
@@ -112,6 +112,10 @@ export default Plugin => new Plugin({
 It is executed when a message is received from the Discord channel.
 
 Argument `message` is [`Message`](https://discord.js.org/#/docs/main/stable/class/Message) object of [discord.js](https://discord.js.org).
+
+Argument `channel` is [`TextChannel`](https://discord.js.org/#/docs/main/stable/class/TextChannel) object of [discord.js](https://discord.js.org).
+
+Argument `user` is [`User`](https://discord.js.org/#/docs/main/stable/class/User) object of [discord.js](https://discord.js.org).
 
 Argument `sendToDiscord` is [`send`](https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=send) function of [discord.js](https://discord.js.org).
 
@@ -133,7 +137,7 @@ For example, it becomes as follows.
 
 ```js
 export default Plugin => new Plugin({
-  minecraft ({log, time, causedAt, level, message, sendToDiscord, sendToMinecraft}) {
+  minecraft ({log, time, causedAt, level, message, channel, user, sendToDiscord, sendToMinecraft}) {
     console.log(log === '[01:23:45] [Server thread/INFO]: player joined the game')
     console.log(time === '01:23:45')
     console.log(causedAt === 'Server thread')
@@ -143,6 +147,10 @@ export default Plugin => new Plugin({
   }
 })
 ```
+
+Argument `channel` is [`TextChannel`](https://discord.js.org/#/docs/main/stable/class/TextChannel) object of [discord.js](https://discord.js.org).
+
+Argument `user` is [`User`](https://discord.js.org/#/docs/main/stable/class/User) object of [discord.js](https://discord.js.org).
 
 Argument `sendToDiscord` is [`send`](https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=send) function of [discord.js](https://discord.js.org).
 
