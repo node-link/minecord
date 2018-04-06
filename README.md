@@ -2,6 +2,8 @@
 
 Connects [Minecraft](https://minecraft.net) Server and [Discord](https://discordapp.com/) without any mods or plugins.
 
+![Minecord](https://raw.githubusercontent.com/wiki/node-link/minecord/images/minecord.gif)
+
 ## Installation
 
 ```
@@ -55,10 +57,10 @@ minecord --config /path/to/config.json
 
 By default, the following plugins are included.
 
-* chat : Sharing messages entered by users with Minecraft and Discord on their respective screens.
-* login
-* whitelist
-* server
+* chat : Sharing messages entered by users with Minecraft and Discord on their respective screens. (Default: enable)
+* login : Transfer login notification to Minecraft to Discord. (Default: disable)
+* whitelist : Transfer whitelist operation notification in Minecraft to Discord. (Default: disable)
+* server : Transfer notification of start and stop of Minecraft server to Discord. (Default: disable)
 
 ## How to make a plugin
 
@@ -76,6 +78,47 @@ export default Plugin => new Plugin({
   }
 })
 ```
+
+### `discord()` method
+
+It is executed when a message is received from the Discord channel.
+
+Argument `message` is [`Message`](https://discord.js.org/#/docs/main/stable/class/Message) object of [discord.js](https://discord.js.org).
+
+Argument `sendToDiscord` is [`send`](https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=send) function of [discord.js](https://discord.js.org).
+
+Argument `sendToMinecraft` is `send` function of [node-modern-rcon](https://github.com/levrik/node-modern-rcon).
+
+### `minecraft()` method
+
+It is executed when new Minecraft log is detected.
+
+Argument `log` is one Minecraft log line.
+
+Argument `time`, `causedAt`, `level` and `message` is the value obtained by parsing the Minecraft log.
+
+For example, it becomes as follows.
+
+```
+[01:23:45] [Server thread/INFO]: player joined the game
+```
+
+```js
+export default Plugin => new Plugin({
+  minecraft ({log, time, causedAt, level, message, sendToDiscord, sendToMinecraft}) {
+    console.log(log === '[01:23:45] [Server thread/INFO]: player joined the game')
+    console.log(time === '01:23:45')
+    console.log(causedAt === 'Server thread')
+    console.log(level === 'INFO')
+    console.log(message === 'player joined the game')
+    // All true
+  }
+})
+```
+
+Argument `sendToDiscord` is [`send`](https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=send) function of [discord.js](https://discord.js.org).
+
+Argument `sendToMinecraft` is `send` function of [node-modern-rcon](https://github.com/levrik/node-modern-rcon).
 
 ## Contribution
 
