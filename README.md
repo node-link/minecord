@@ -1,4 +1,9 @@
-# Minecord
+Minecord
+===
+
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square&maxAge=86400)](LICENSE)
+[![npm](https://img.shields.io/npm/v/minecord.svg?style=flat-square&maxAge=86400)](https://www.npmjs.com/package/minecord)
+[![npm](https://img.shields.io/npm/dt/minecord.svg?style=flat-square)](https://www.npmjs.com/package/minecord)
 
 Connects [Minecraft](https://minecraft.net) Server and [Discord](https://discordapp.com/) without any mods or plugins.
 
@@ -57,7 +62,6 @@ Alternatively, the setting can be given as an option.
 
 ```
 minecord --help
-
 
   Usage: minecord [options]
 
@@ -144,6 +148,12 @@ Argument `sendToDiscord` is [`send`](https://discord.js.org/#/docs/main/stable/c
 
 Argument `sendToMinecraft` is `send` function of [node-modern-rcon](https://github.com/levrik/node-modern-rcon).
 
+## Author
+
+[@n0f](https://github.com/n0f)
+
+[![Follow](https://img.shields.io/twitter/follow/n0f.svg?style=social&label=Follow)](https://twitter.com/n0f)
+
 ## Contribution
 
 I would be delighted if you rewrite `README.md` in native English!!
@@ -151,3 +161,7 @@ I would be delighted if you rewrite `README.md` in native English!!
 Of course, I would be delighted if you point out any problems or improvements related to the program.
 
 https://github.com/node-link/minecord/issues
+
+## Licence
+
+[MIT](LICENSE)
