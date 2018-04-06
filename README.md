@@ -81,6 +81,8 @@ minecord --help
     -h, --help                            output usage information
 ```
 
+If you are an administrator of the channel of Discord, you can use it more conveniently by unifying Discord's nickname and Minecraft's username.
+
 ## Plugins
 
 By default, the following plugins are included.
@@ -167,6 +169,8 @@ Argument `sendToMinecraft` is `send` function of [node-modern-rcon](https://gith
 I would be delighted if you rewrite `README.md` in native English!!
 
 Of course, I would be delighted if you point out any problems or improvements related to the program.
+
+Or, I would appreciate it if you increase the number of plugins included by default.
 
 https://github.com/node-link/minecord/issues
 
