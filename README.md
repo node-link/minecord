@@ -1,6 +1,6 @@
 # Minecord
 
-Connects Discord and Minecraft Servers without any mods or plugins.
+Connects [Minecraft](https://minecraft.net) Server and [Discord](https://discordapp.com/) without any mods or plugins.
 
 ## Installation
 
@@ -50,6 +50,15 @@ And run Minecord.
 ```
 minecord --config /path/to/config.json
 ```
+
+## Plugins
+
+By default, the following plugins are included.
+
+* chat : Sharing messages entered by users with Minecraft and Discord on their respective screens.
+* login
+* whitelist
+* server
 
 ## How to make a plugin
 

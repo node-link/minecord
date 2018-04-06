@@ -4,13 +4,13 @@ import 'babel-polyfill'
 import config from './config'
 import { Client } from 'discord.js'
 import Rcon from 'modern-rcon'
-import { Tail } from 'tail'
+import Tail from 'always-tail'
 import Plugin from './Plugin'
 
 config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, minecraftRconPort, minecraftRconPassword, discordBotToken, discordChannel}) => {
   const discord = new Client()
   const rcon = new Rcon(minecraftRconHost, minecraftRconPort, minecraftRconPassword)
-  const log = new Tail(minecraftLog)
+  const tail = new Tail(minecraftLog)
 
   let channel
   const plugins = []
@@ -55,7 +55,7 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
 
   const RegExpLog = /^\[(.*)]\s\[([^/]*)\/(.*)]:\s(.*)$/
 
-  log.on('line', async line => {
+  tail.on('line', async line => {
     if (!RegExpLog.test(line)) return
 
     const [log, time, causedAt, level, message] = RegExpLog.exec(line)
@@ -73,4 +73,5 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
   })
 
   discord.login(discordBotToken)
+  tail.watch()
 })
