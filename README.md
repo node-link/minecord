@@ -53,6 +53,30 @@ And run Minecord.
 minecord --config /path/to/config.json
 ```
 
+Alternatively, the setting can be given as an option.
+
+```
+minecord --help
+
+
+  Usage: minecord [options]
+
+  Options:
+
+    -V, --version                         output the version number
+    -c, --config <file>                   set configuration file
+    -p, --plugins-dir <dir>               set local plugins directory
+    --enable <plugins>                    enable plugin by name, "--enable PLUGIN1,PLUGIN2" for multiple plugins
+    --disable <plugins>                   disable plugin by name, "--disable PLUGIN1,PLUGIN2" for multiple plugins
+    --minecraft-log <path>                set the path to Minecraft log (It is recommended to specify them collectively in the configuration file)
+    --minecraft-rcon-host <host>          set the Minecraft Server rcon host (It is recommended to specify them collectively in the configuration file)
+    --minecraft-rcon-port <port>          set the Minecraft Server rcon port (It is recommended to specify them collectively in the configuration file)
+    --minecraft-rcon-password <password>  set the Minecraft Server rcon password (It is recommended to specify them collectively in the configuration file)
+    --discord-bot-token <token>           set Discord bot token (It is recommended to specify them collectively in the configuration file)
+    --discord-channel <id>                set Discord channel ID for for the discord bot (It is recommended to specify them collectively in the configuration file)
+    -h, --help                            output usage information
+```
+
 ## Plugins
 
 By default, the following plugins are included.
