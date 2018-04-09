@@ -12,7 +12,7 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
 
   const discord = new Client()
   const rcon = new Rcon(minecraftRconHost, minecraftRconPort, minecraftRconPassword)
-  const tail = new Tail(minecraftLog)
+  const tail = new Tail(minecraftLog, {fromBeginning: true})
 
   let channel
   const plugins = []
