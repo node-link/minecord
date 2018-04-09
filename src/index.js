@@ -4,7 +4,8 @@ import 'babel-polyfill'
 import config from './config'
 import { Client } from 'discord.js'
 import Rcon from 'modern-rcon'
-import { Tail } from 'tail'
+import { createReadStream } from 'tail-stream'
+import { createInterface } from 'readline'
 import Plugin from './Plugin'
 
 config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, minecraftRconPort, minecraftRconPassword, discordBotToken, discordChannel}) => {
@@ -12,7 +13,14 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
 
   const discord = new Client()
   const rcon = new Rcon(minecraftRconHost, minecraftRconPort, minecraftRconPassword)
-  const tail = new Tail(minecraftLog, {fromBeginning: true})
+  const tail = createInterface({
+    input: createReadStream(minecraftLog, {
+      beginAt: 'end',
+      onMove: 'stay',
+      onTruncate: 'reset',
+      waitForCreate: true,
+    })
+  })
 
   let channel
   const plugins = []

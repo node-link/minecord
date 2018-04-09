@@ -1,6 +1,6 @@
 {
   "name": "minecord",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Connects Discord and Minecraft Servers without any mods or plugins.",
   "main": "./lib/index.js",
   "module": "./src/index.js",
@@ -40,6 +40,6 @@
     "commander": "^2.15.1",
     "discord.js": "^11.3.2",
     "modern-rcon": "^1.0.3",
-    "tail": "^1.2.3"
+    "tail-stream": "^0.3.4"
   }
 }
