@@ -4,23 +4,15 @@ import 'babel-polyfill'
 import config from './config'
 import { Client } from 'discord.js'
 import Rcon from 'modern-rcon'
-import { createReadStream } from 'tail-stream'
-import { createInterface } from 'readline'
+import Tail from './Tail'
 import Plugin from './Plugin'
 
 config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, minecraftRconPort, minecraftRconPassword, discordBotToken, discordChannel}) => {
   process.stdout.write('Starting Minecord ... ')
 
-  const discord = new Client()
+  const client = new Client()
   const rcon = new Rcon(minecraftRconHost, minecraftRconPort, minecraftRconPassword)
-  const tail = createInterface({
-    input: createReadStream(minecraftLog, {
-      beginAt: 'end',
-      onMove: 'stay',
-      onTruncate: 'reset',
-      waitForCreate: true,
-    })
-  })
+  const tail = new Tail(minecraftLog)
 
   let channel
   const plugins = []
@@ -43,23 +35,23 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
     if (plugin) plugins.push(plugin(Plugin))
   })
 
-  const sendToDiscord = async (...args) => await channel.send(...args)
-  const sendToMinecraft = async (...args) => await rcon.send(...args)
+  const sendToDiscord = (...args) => channel.send(...args)
+  const sendToMinecraft = (...args) => rcon.send(...args)
 
-  discord.on('ready', () => {
-    channel = discord.channels.get(discordChannel)
+  client.on('ready', () => {
+    channel = client.channels.get(discordChannel)
     console.log('Done!!')
   })
 
-  discord.on('message', async message => {
+  client.on('message', async message => {
     if (message.channel.id !== channel.id) return
-    if (message.author.bot || message.author.id === discord.user.id) return
+    if (message.author.bot || message.author.id === client.user.id) return
 
     await rcon.connect()
-    await Promise.all(plugins.map(async plugin => await plugin.discord({
+    await Promise.all(plugins.map(({discord}) => discord({
       message,
       channel,
-      user: discord.user,
+      user: client.user,
       sendToDiscord,
       sendToMinecraft,
     })))
@@ -74,18 +66,18 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
     const [log, time, causedAt, level, message] = RegExpLog.exec(line)
     console.log(log)
 
-    await Promise.all(plugins.map(async plugin => await plugin.minecraft({
+    await Promise.all(plugins.map(({minecraft}) => minecraft({
       log,
       time,
       causedAt,
       level,
       message,
       channel,
-      user: discord.user,
+      user: client.user,
       sendToDiscord,
       sendToMinecraft,
     })))
   })
 
-  discord.login(discordBotToken)
+  client.login(discordBotToken)
 })
