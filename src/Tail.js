@@ -1,9 +1,8 @@
 import { EventEmitter } from 'events'
-import fs from 'fs'
-import path from 'path'
-import chokidar from 'chokidar'
-
-const separator = /[\r]{0,1}\n/
+import { createReadStream, statSync } from 'fs'
+import { createInterface } from 'readline'
+import { dirname } from 'path'
+import { watch } from 'chokidar'
 
 export default class Tail extends EventEmitter {
   constructor (filename) {
@@ -20,24 +19,20 @@ export default class Tail extends EventEmitter {
     const stats = this._getStats()
     if (stats) this.position = stats.size
 
-    this.watcher = chokidar
-      .watch(path.dirname(this.filename), {
-        ignoreInitial: true,
-        alwaysStat: true,
-        awaitWriteFinish: {
-          stabilityThreshold: 200,
-          pollInterval: 50,
-        },
-      })
-      .on('add', (basename, stats) => {
-        if (basename === this.filename) this._handleCreateFile(stats)
-      })
-      .on('change', (basename, stats) => {
-        if (basename === this.filename) this._handleChangeFile(stats)
-      })
-      .on('unlink', basename => {
-        if (basename === this.filename) this._handleRemoveFile()
-      })
+    this.watcher = watch(dirname(this.filename), {
+      ignoreInitial: true,
+      alwaysStat: true,
+      awaitWriteFinish: {
+        stabilityThreshold: 200,
+        pollInterval: 50,
+      },
+    }).on('add', (basename, stats) => {
+      if (basename === this.filename) this._handleCreateFile(stats)
+    }).on('change', (basename, stats) => {
+      if (basename === this.filename) this._handleChangeFile(stats)
+    }).on('unlink', basename => {
+      if (basename === this.filename) this._handleRemoveFile()
+    })
   }
 
   unwatch () {
@@ -48,7 +43,7 @@ export default class Tail extends EventEmitter {
 
   _getStats () {
     try {
-      return fs.statSync(this.filename)
+      return statSync(this.filename)
     } catch (e) {
       return false
     }
@@ -60,19 +55,19 @@ export default class Tail extends EventEmitter {
   }
 
   _handleChangeFile (stats) {
-    if (stats.size > this.position) {
-      const stream = fs.createReadStream(this.filename, {
+    if (stats.size < this.position) this.position = 0
+
+    if (!stats.size) return
+
+    createInterface({
+      input: createReadStream(this.filename, {
         start: this.position,
         end: stats.size - 1,
         encoding: 'utf-8',
       })
-
-      stream.on('data', data => {
-        data.split(separator).forEach(line => {
-          this.emit('line', line)
-        })
-      })
-    }
+    }).on('line', line => {
+      this.emit('line', line)
+    })
 
     this.position = stats.size
   }

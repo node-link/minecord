@@ -1,6 +1,6 @@
 {
   "name": "minecord",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Connects Discord and Minecraft Servers without any mods or plugins.",
   "main": "./lib/index.js",
   "module": "./src/index.js",
