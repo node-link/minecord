@@ -1,4 +1,4 @@
-const RegExpTalk = /^[<[](.*)[>\]]\s(.*)$/
+const RegExpTalk = /^[<[](.*?)[>\]]\s(.*)$/
 
 export default Plugin => new Plugin({
   async discord ({message, sendToMinecraft}) {
