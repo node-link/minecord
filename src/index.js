@@ -5,35 +5,29 @@ import config from './config'
 import { Client } from 'discord.js'
 import Rcon from 'modern-rcon'
 import Tail from './Tail'
-import Plugin from './Plugin'
+import { loadPlugins } from './Plugin'
 
-config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, minecraftRconPort, minecraftRconPassword, discordBotToken, discordChannel}) => {
+(async () => {
+  const {
+    enable,
+    disable,
+    minecraftLog,
+    minecraftRconHost,
+    minecraftRconPort,
+    minecraftRconPassword,
+    discordBotToken,
+    discordChannel,
+  } = await config()
+
   process.stdout.write('Starting Minecord ... ')
+
+  const plugins = await loadPlugins(enable.filter(pluginName => !disable.includes(pluginName)))
 
   const client = new Client()
   const rcon = new Rcon(minecraftRconHost, minecraftRconPort, minecraftRconPassword)
   const tail = new Tail(minecraftLog)
 
   let channel
-  const plugins = []
-
-  enable.filter(pluginName => !disable.includes(pluginName)).forEach(async pluginName => {
-    let plugin
-
-    try {
-      if (pluginsDir) plugin = (await import(`${pluginsDir}/${pluginName}`)).default
-    } catch (e) {}
-
-    try {
-      if (!plugin) plugin = (await import(`minecord-plugin-${pluginName}`)).default
-    } catch (e) {}
-
-    try {
-      if (!plugin) plugin = (await import(`./plugins/${pluginName}`)).default
-    } catch (e) {}
-
-    if (plugin) plugins.push(plugin(Plugin))
-  })
 
   const sendToDiscord = (...args) => channel.send(...args)
   const sendToMinecraft = (...args) => rcon.send(...args)
@@ -79,5 +73,5 @@ config().then(({pluginsDir, enable, disable, minecraftLog, minecraftRconHost, mi
     })))
   })
 
-  client.login(discordBotToken)
-})
+  await client.login(discordBotToken)
+})()

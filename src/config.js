@@ -27,10 +27,14 @@ program
   .option('--discord-channel <id>', 'set Discord channel ID for for the discord bot (It is recommended to specify them collectively in the configuration file)')
   .parse(process.argv)
 
+let cache = null
+
 export default async () => {
+  if (cache) return cache
+
   const config = program.config ? await import(program.config) : {}
 
-  return {
+  return cache = {
     pluginsDir: program.pluginsDir || config.pluginsDir || configDefault.pluginsDir,
     enable: [...(new Set([...(program.enable || []), ...(config.enable || []), ...configDefault.enable]))],
     disable: [...(new Set([...(program.disable || []), ...(config.disable || []), ...configDefault.disable]))],
