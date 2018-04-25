@@ -37,6 +37,7 @@ Set up the `config.json` file.
   "enable": [
     "chat",
     "login",
+    "death",
     "whitelist",
     "server"
   ],
@@ -88,7 +89,8 @@ If you are an administrator of the channel of Discord, you can use it more conve
 By default, the following plugins are included.
 
 * chat : Sharing messages entered by users with Minecraft and Discord on their respective screens. (Default: enable)
-* login : Transfer login notification to Minecraft to Discord. (Default: disable)
+* login : Transfer login notification in Minecraft to Discord. (Default: disable)
+* death : Transfer the dead player notification in Minecraft to Discord. (Default: disable)
 * whitelist : Transfer whitelist operation notification in Minecraft to Discord. (Default: disable)
 * server : Transfer notification of start and stop of Minecraft server to Discord. (Default: disable)
 

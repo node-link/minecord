@@ -1,16 +1,14 @@
-const RegExpJoin = /^(.*)\sjoined\sthe\sgame$/
-const RegExpLeft = /^(.*)\sleft\sthe\sgame$/
+import Replacers from '../Replacers'
+
+const replacers = (new Replacers)
+  .add(/^(.*)\sjoined\sthe\sgame$/, (message, player) => `${player} がログインしたみたい。`)
+  .add(/^(.*)\sleft\sthe\sgame$/, (message, player) => `${player} がログアウトしたみたい。`)
 
 export default Plugin => new Plugin({
   async minecraft ({causedAt, level, message, sendToDiscord}) {
     if (causedAt !== 'Server thread' || level !== 'INFO') return
 
-    if (RegExpJoin.test(message)) {
-      const [, player] = RegExpJoin.exec(message)
-      await sendToDiscord(`${player} がログインしたみたい。`)
-    } else if (RegExpLeft.test(message)) {
-      const [, player] = RegExpLeft.exec(message)
-      await sendToDiscord(`${player} がログアウトしたみたい。`)
-    }
+    const newMessage = replacers.replace(message)
+    if (newMessage !== false) await sendToDiscord(newMessage)
   }
 })

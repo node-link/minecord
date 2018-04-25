@@ -1,14 +1,13 @@
-const RegExpWhiteListAdd = /^\[(.*):\sAdded\s(.*)\sto\sthe\swhitelist]$/
-const RegExpWhiteListRemove = /^\[(.*):\sRemoved\s(.*)\sfrom\sthe\swhitelist]$/
+const regexpArray = [
+  /^\[(.*):\sAdded\s(.*)\sto\sthe\swhitelist]$/,
+  /^\[(.*):\sRemoved\s(.*)\sfrom\sthe\swhitelist]$/,
+]
 
 export default Plugin => new Plugin({
   async minecraft ({causedAt, level, message, sendToDiscord}) {
     if (causedAt !== 'Server thread' || level !== 'INFO') return
 
-    if (RegExpWhiteListAdd.test(message)) {
+    if (regexpArray.some(regexp => regexp.test(message)))
       await sendToDiscord(message)
-    } else if (RegExpWhiteListRemove.test(message)) {
-      await sendToDiscord(message)
-    }
   }
 })

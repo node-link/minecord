@@ -52,12 +52,12 @@ import { loadPlugins } from './Plugin'
     await rcon.disconnect()
   })
 
-  const RegExpLog = /^\[(.*)]\s\[([^/]*)\/(.*)]:\s(.*)$/
+  const regexpLog = /^\[(.*)]\s\[([^/]*)\/(.*)]:\s(.*)$/
 
   tail.on('line', async line => {
-    if (!RegExpLog.test(line)) return
+    if (!regexpLog.test(line)) return
 
-    const [log, time, causedAt, level, message] = RegExpLog.exec(line)
+    const [log, time, causedAt, level, message] = regexpLog.exec(line)
     console.log(log)
 
     await Promise.all(plugins.map(({minecraft}) => minecraft({

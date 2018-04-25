@@ -1,4 +1,4 @@
-const RegExpTalk = /^[<[](.*?)[>\]]\s(.*)$/
+const regexpTalk = /^[<[](.*?)[>\]]\s(.*)$/
 
 export default Plugin => new Plugin({
   async discord ({message, sendToMinecraft}) {
@@ -8,9 +8,9 @@ export default Plugin => new Plugin({
   },
   async minecraft ({causedAt, level, message, sendToDiscord}) {
     if (causedAt !== 'Server thread' || level !== 'INFO') return
-    if (!RegExpTalk.test(message)) return
+    if (!regexpTalk.test(message)) return
 
-    const [, player, text] = RegExpTalk.exec(message)
+    const [, player, text] = regexpTalk.exec(message)
     await sendToDiscord(`**${player}**: ${text}`)
   }
 })
