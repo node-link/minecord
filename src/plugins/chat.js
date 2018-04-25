@@ -1,4 +1,8 @@
-const regexpTalk = /^[<[](.*?)[>\]]\s(.*)$/
+import Replacers from '../Replacers'
+
+const replacers = (new Replacers)
+  .add(/^<(.*?)>\s(.*)$/, (message, player, text) => `**${player}**: ${text}`)
+  .add(/^\[(.*?)]\s(.*)$/, (message, player, text) => `**${player}**: ${text}`)
 
 export default Plugin => new Plugin({
   async discord ({message, sendToMinecraft}) {
@@ -8,9 +12,8 @@ export default Plugin => new Plugin({
   },
   async minecraft ({causedAt, level, message, sendToDiscord}) {
     if (causedAt !== 'Server thread' || level !== 'INFO') return
-    if (!regexpTalk.test(message)) return
 
-    const [, player, text] = regexpTalk.exec(message)
-    await sendToDiscord(`**${player}**: ${text}`)
+    const newMessage = replacers.replace(message)
+    if (newMessage !== false) await sendToDiscord(newMessage)
   }
 })
