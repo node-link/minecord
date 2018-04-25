@@ -1,13 +1,17 @@
 import Replacer from './Replacer'
 
-export default class Replacers extends Array {
+export default class Replacers {
+  constructor () {
+    this.replacers = []
+  }
+
   add (regexp, replacer) {
-    this.push(new Replacer(regexp, replacer))
+    this.replacers.push(new Replacer(regexp, replacer))
     return this
   }
 
   replace (str) {
-    const replacer = this.find(replacer => replacer.test(str))
+    const replacer = this.replacers.find(replacer => replacer.test(str))
     return replacer ? replacer.replace(str) : false
   }
 }
