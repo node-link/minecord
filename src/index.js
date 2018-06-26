@@ -17,6 +17,7 @@ import { loadPlugins } from './Plugin'
     minecraftRconPassword,
     discordBotToken,
     discordChannel,
+    encode,
   } = await config()
 
   process.stdout.write('Starting Minecord ... ')
@@ -25,7 +26,7 @@ import { loadPlugins } from './Plugin'
 
   const client = new Client()
   const rcon = new Rcon(minecraftRconHost, minecraftRconPort, minecraftRconPassword)
-  const tail = new Tail(minecraftLog)
+  const tail = new Tail(minecraftLog, encode)
 
   let channel
 

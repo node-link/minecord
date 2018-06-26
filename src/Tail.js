@@ -3,11 +3,13 @@ import { createReadStream, statSync } from 'fs'
 import { createInterface } from 'readline'
 import { dirname } from 'path'
 import { watch } from 'chokidar'
+import { decodeStream } from 'iconv-lite'
 
 export default class Tail extends EventEmitter {
-  constructor (filename) {
+  constructor (filename, encode) {
     super()
     this.filename = filename
+    this.encode = encode || 'utf-8'
     this.watcher = null
     this.position = 0
     this.watch()
@@ -63,8 +65,7 @@ export default class Tail extends EventEmitter {
       input: createReadStream(this.filename, {
         start: this.position,
         end: stats.size - 1,
-        encoding: 'utf-8',
-      })
+      }).pipe(decodeStream(this.encode))
     }).on('line', line => {
       this.emit('line', line)
     })
