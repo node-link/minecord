@@ -10,7 +10,8 @@ const configDefault = {
   minecraftRconPort: 25575,
   minecraftRconPassword: '',
   discordBotToken: '',
-  discordChannel: ''
+  discordChannel: '',
+  encode: 'utf-8',
 }
 
 program
@@ -25,6 +26,7 @@ program
   .option('--minecraft-rcon-password <password>', 'set the Minecraft Server rcon password (It is recommended to specify them collectively in the configuration file)')
   .option('--discord-bot-token <token>', 'set Discord bot token (It is recommended to specify them collectively in the configuration file)')
   .option('--discord-channel <id>', 'set Discord channel ID for for the discord bot (It is recommended to specify them collectively in the configuration file)')
+  .option('--encode <charset>', 'set characterset of log file (default: utf-8)')
   .parse(process.argv)
 
 let cache = null
@@ -44,5 +46,6 @@ export default async () => {
     minecraftRconPassword: program.minecraftRconPassword || config.minecraftRconPassword || configDefault.minecraftRconPassword,
     discordBotToken: program.discordBotToken || config.discordBotToken || configDefault.discordBotToken,
     discordChannel: program.discordChannel || config.discordChannel || configDefault.discordChannel,
+    encode: program.encode || config.encode || configDefault.encode,
   }
 }
