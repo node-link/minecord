@@ -1,6 +1,6 @@
 {
   "name": "minecord",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Connects Discord and Minecraft Servers without any mods or plugins.",
   "main": "./lib/index.js",
   "module": "./src/index.js",
@@ -37,8 +37,8 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "chokidar": "^2.0.3",
-    "commander": "^2.15.1",
+    "chokidar": "^2.0.4",
+    "commander": "^2.16.0",
     "discord.js": "^11.3.2",
     "iconv-lite": "^0.4.23",
     "modern-rcon": "^1.0.3"

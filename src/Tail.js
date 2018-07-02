@@ -6,10 +6,10 @@ import { watch } from 'chokidar'
 import { decodeStream } from 'iconv-lite'
 
 export default class Tail extends EventEmitter {
-  constructor (filename, encode) {
+  constructor (filename, encode = 'utf-8') {
     super()
     this.filename = filename
-    this.encode = encode || 'utf-8'
+    this.encode = encode
     this.watcher = null
     this.position = 0
     this.watch()
