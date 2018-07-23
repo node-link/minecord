@@ -53,7 +53,7 @@ import { loadPlugins } from './Plugin'
     await rcon.disconnect()
   })
 
-  const regexpLog = /^\[(.*)]\s\[([^/]*)\/(.*)]:\s(.*)$/
+  const regexpLog = /^\[(.*)]\s\[([^/]*)\/(.*)].*:\s(.*)$/
 
   tail.on('line', async line => {
     if (!regexpLog.test(line)) return
