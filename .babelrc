@@ -1,9 +1,9 @@
 {
   "presets": [
-    "es2015",
-    "stage-3"
-  ],
-  "plugins": [
-    "dynamic-import-node"
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "4"
+      }
+    }]
   ]
 }

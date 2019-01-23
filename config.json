@@ -7,7 +7,7 @@
   "minecraftLog": "/var/minecraft/logs/latest.log",
   "minecraftRconHost": "localhost",
   "minecraftRconPort": 25575,
-  "minecraftRconPassword": "",
+  "minecraftRconPassword": "secret",
   "discordBotToken": "",
   "discordChannel": ""
 }

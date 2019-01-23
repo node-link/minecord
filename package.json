@@ -1,6 +1,6 @@
 {
   "name": "minecord",
-  "version": "0.0.23",
+  "version": "0.0.25",
   "description": "Connects Discord and Minecraft Servers without any mods or plugins.",
   "main": "./lib/index.js",
   "module": "./src/index.js",
@@ -30,17 +30,16 @@
   },
   "homepage": "https://github.com/node-link/minecord#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-dynamic-import-node": "^1.2.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-3": "^6.24.1"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
+    "@babel/polyfill": "^7.2.5",
     "chokidar": "^2.0.4",
-    "commander": "^2.16.0",
-    "discord.js": "^11.3.2",
-    "iconv-lite": "^0.4.23",
+    "commander": "^2.19.0",
+    "discord.js": "^11.4.2",
+    "iconv-lite": "^0.4.24",
     "modern-rcon": "^1.0.3"
   }
 }

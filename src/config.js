@@ -8,7 +8,7 @@ const configDefault = {
   minecraftLog: '/var/minecraft/logs/latest.log',
   minecraftRconHost: 'localhost',
   minecraftRconPort: 25575,
-  minecraftRconPassword: '',
+  minecraftRconPassword: 'secret',
   discordBotToken: '',
   discordChannel: '',
   encode: 'utf-8',
@@ -31,10 +31,10 @@ program
 
 let cache = null
 
-export default async () => {
+export default () => {
   if (cache) return cache
 
-  const config = program.config ? await import(program.config) : {}
+  const config = program.config ? require(program.config) : {}
 
   return cache = {
     pluginsDir: program.pluginsDir || config.pluginsDir || configDefault.pluginsDir,

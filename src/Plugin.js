@@ -7,28 +7,28 @@ export default class Plugin {
   }
 }
 
-export const loadPlugins = async (pluginNames = []) => {
-  const {pluginsDir} = await config()
+export const loadPlugins = (pluginNames = []) => {
+  const {pluginsDir} = config()
 
   const plugins = []
 
-  await Promise.all(pluginNames.map(async pluginName => {
+  pluginNames.map(pluginName => {
     let plugin
 
     try {
-      if (pluginsDir) plugin = (await import(`${pluginsDir}/${pluginName}`)).default
+      if (pluginsDir) plugin = require(`${pluginsDir}/${pluginName}`).default
     } catch (e) {}
 
     try {
-      if (!plugin) plugin = (await import(`minecord-plugin-${pluginName}`)).default
+      if (!plugin) plugin = require(`minecord-plugin-${pluginName}`).default
     } catch (e) {}
 
     try {
-      if (!plugin) plugin = (await import(`./plugins/${pluginName}`)).default
+      if (!plugin) plugin = require(`./plugins/${pluginName}`).default
     } catch (e) {}
 
     if (plugin) plugins.push(plugin(Plugin))
-  }))
+  })
 
   return plugins
 }
